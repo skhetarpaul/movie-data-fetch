@@ -1,23 +1,20 @@
 import React from 'react';
-
+import ImaagesContainer from './ImagesContainer'
+import MovieContainer from './MovieContainer'
 import './App.css';
 
 function App() {
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div id="app">
+      <div style={{"textAlign":"center"}}className = "neon-orange">
+          Movie
+        </div>
+        <div style={{"textAlign":"center"}} className = "neon-blue">
+          Doodler
+        </div>
+      {/* <ImaagesContainer /> */}
+      <MovieContainer/>
     </div>
   );
 }
