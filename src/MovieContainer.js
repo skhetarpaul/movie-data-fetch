@@ -3,6 +3,7 @@ import StackGrid , { transitions } from "react-stack-grid";
 import CardComponent from './CardComponent'
 import axios from 'axios'
 import spinner from './images/loader.gif'
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const { scaleDown } = transitions;
 export default class MovieContainer extends Component {
@@ -10,27 +11,26 @@ export default class MovieContainer extends Component {
         super(props)
         this.state= ({
             images: [],
-            responses: []
+            responses: [],
+            pages: 1
         })
         this.searchUnsplash = this.searchUnsplash.bind(this)
     }
-    async searchUnsplash(topic) {
+    async searchUnsplash() {
+        this.setState(prev => ({
+          pages: prev.pages+1
+        }))
+        console.log("page count is",this.state.pages)
         let response = await 
-                              axios
-                              .get(
-                                `https://api.unsplash.com/search/photos?query=Autumn&per_page=20`,
-                                {
-                                  headers: {
-                                    Authorization:
-                                      "Client-ID bbRCcna4uzk6KzqiKvuCjmzH-grJr1TLB5gt6gKFslE",
-                                    "Accept-Version": "v1"
-                                  }
-                                }
-                              )
+        axios
+            .get(
+          `     https://api.themoviedb.org/3/discover/movie?primary_release_date.gte=2014-09-15&primary_release_date.lte=2014-10-22&api_key=843c44eea75c6f1f4a15f3b22fbf5ada&page=${this.state.pages}`)
+
         response = response.data.results
-        this.setState({
-          images: response
-        })
+        console.log(response, "page responses")
+        this.setState(prev => ({
+          responses: [...prev.responses, response]
+        }))
       }
       async componentDidMount(){
         
